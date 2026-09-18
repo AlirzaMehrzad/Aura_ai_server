@@ -1,6 +1,6 @@
 import { llmClient } from '../llm/client';
 import { reviewRepository } from '../repositories/review.repository';
-import template from '../prompts/summarize-reviews.txt';
+import template from '../llm/prompts/summarize-reviews.txt';
 
 export const reviewService = {
   summarizeReviews: async (productId: number): Promise<string> => {
@@ -13,15 +13,18 @@ export const reviewService = {
     const reviews = await reviewRepository.getReviews(productId, 10);
     const joindReviews = reviews.map((r) => r.content).join('\n\n');
 
-    // Send reviws to a LLM
-    const prompt = template.replace('{{reviews}}', joindReviews);
+    // ==> Send reviws to a openAI LLMs
+    //const prompt = template.replace('{{reviews}}', joindReviews);
 
-    const { text: summary } = await llmClient.generateText({
-      model: 'gpt-4.1',
-      prompt,
-      temperature: 0.2,
-      maxTokens: 500,
-    });
+    // const { text: summary } = await llmClient.generateText({
+    //   model: 'gpt-4.1',
+    //   prompt,
+    //   temperature: 0.2,
+    //   maxTokens: 500,
+    // });
+
+    // ==> Send reviws to a Huggingface LLMs
+    const summary = await llmClient.huggingFaceService(joindReviews);
 
     await reviewRepository.storeReviewSummary(productId, summary);
 

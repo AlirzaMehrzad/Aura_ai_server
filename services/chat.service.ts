@@ -11,7 +11,7 @@ export const chatService = {
     prompt: string,
     conversationId: string
   ): Promise<ChatResponse> => {
-    const response = await llmClient.generateText({
+    const response = await llmClient.openAiService({
       model: 'gpt-4o-mini',
       prompt,
       temperature: 0.2,
