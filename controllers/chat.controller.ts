@@ -20,7 +20,8 @@ export const chatController = {
 
     try {
       const { prompt, conversationId } = parsed.data;
-      const response = await chatService.sendMessage(prompt, conversationId);
+      const response = await chatService.sendMessage(prompt);
+      //conversationId);
       res.json({ message: response.message });
     } catch (error) {
       res

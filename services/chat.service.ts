@@ -8,19 +8,22 @@ type ChatResponse = {
 
 export const chatService = {
   sendMessage: async (
-    prompt: string,
-    conversationId: string
+    prompt: string
+    //conversationId: string
   ): Promise<ChatResponse> => {
     const response = await llmClient.openAiService({
       model: 'gpt-4o-mini',
       prompt,
       temperature: 0.2,
       maxTokens: 200,
-      previousResponseId:
-        conversationRepository.getLastResponseId(conversationId),
+      //previousResponseId:
+      //conversationRepository.getLastResponseId(conversationId),
     });
 
-    conversationRepository.setLastResponseId(conversationId, response.id);
+    // conversationRepository.setLastResponseId(
+    //   conversationId,
+    //   response.id
+    // );
 
     return {
       id: response.id,
