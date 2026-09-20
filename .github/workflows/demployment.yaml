@@ -3,8 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main # Triggers when you push or merge to the main branch
-
+      - master # Changed from main
+  pull_request:
+    branches:
+      - master # Changed from main
 jobs:
   build-and-verify:
     name: Build & Verify
